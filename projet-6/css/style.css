@@ -1,0 +1,99 @@
+article {
+    padding: 5rem;
+}
+aside {
+    background-color: #CC5285;
+}
+
+header {
+    display: list-item;
+    text-align: center;
+    padding: 1rem;
+}
+.croix {
+    text-align: center;
+}
+
+.fas {
+    font-weight: 700;
+    font-size: 5rem;
+    margin:auto;
+}
+
+#game {
+    background-color: #4C2E4D;
+}
+
+#game_over {
+    display: none;
+    text-align: center;
+}
+
+#banner_text, #game_over {
+    margin-top: 1rem;
+    font-size: 5rem;
+}
+
+body {
+    background-image: url("C:\Users\alice\Documents\projet-6\img\metropolis-cyberpunk.jpg");
+    background-size: cover;
+    font-family: 'Press Start 2P', cursive;
+}
+
+tr, td {
+    background-color: #4C2E4D;
+}
+
+a {
+    color: black;
+}
+
+.intro_outro_btn, .outro_btn, .game_btn {
+    background-color: blueviolet;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    justify-content: center;
+   
+}
+
+.game_btn {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+.intro_outro_btn {
+    margin: 1rem;
+}
+
+table {
+    display: flex;
+    justify-content : space-around;
+    background-color: #4C2E4D;
+    color: #FFEED9;
+}
+
+
+td {
+    width: 150px;
+    height: 150px;
+    border : 1px solid #CC5285;
+    border-radius: 6px;
+    background-size : contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.inaccessible{
+    background-color: grey;
+}
+
+.vide{
+    background-color: white;
+}
+
+#deplacement_JUn, #deplacement_JDeux, #attaquer, #se_defendre, #coup_suivant{
+    display: none;
+}
