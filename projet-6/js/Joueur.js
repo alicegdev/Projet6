@@ -143,9 +143,9 @@ class Joueur {
         moveCount++;
         if (moveCount < 4) {
           if (joueurUn.actif === true) {
-            joueurUn.gestionEvenementsClavier(casesPossibles, e);
+            joueurUn.gestionEvenementsClavier(casesPossibles, e, moveCount);
           } else {
-            joueurDeux.gestionEvenementsClavier(casesPossibles, e);
+            joueurDeux.gestionEvenementsClavier(casesPossibles, e, moveCount);
           }
         }
       });
@@ -157,9 +157,10 @@ class Joueur {
    * @param {event} e - événement touche pressée
    */
 
-  gestionEvenementsClavier(casesPossibles, e) {
+  gestionEvenementsClavier(casesPossibles, e, moveCount) {
     if (this.actif === true) {
       this.moving = true;
+      let firstTime = true;
 
       if (e.key == "Right" || e.key == "ArrowRight") {
         this.celluleFinTour = carteUne.cellules.find((cellule) => {
@@ -179,11 +180,11 @@ class Joueur {
         });
       }
 
-      this.checkIfPlayerIsStopped(casesPossibles);
+      this.checkIfPlayerIsStopped(casesPossibles, moveCount, e, firstTime);
 
       document.addEventListener("keyup", () => {
         document.removeEventListener("keydown", (e) => {
-          this.gestionEvenementsClavier(casesPossibles, e);
+          this.gestionEvenementsClavier(casesPossibles, e, moveCount);
         });
       });
     }
@@ -193,7 +194,7 @@ class Joueur {
    * @param {array} casesPossibles - les cases sur lesquelles le joueur peut se déplacer
    */
 
-  checkIfPlayerIsStopped(casesPossibles) {
+  checkIfPlayerIsStopped(casesPossibles, moveCount, e) {
     if (
       this.actif === true &&
       (casesPossibles.includes(this.celluleFinTour) === false ||
@@ -203,9 +204,16 @@ class Joueur {
         return cellule.x === this.posX && cellule.y === this.posY;
       });
       this.stopped = true;
-      document.removeEventListener("keydown", (e) => {
-        this.gestionEvenementsClavier(casesPossibles, e);
-      });
+      console.log("Player stopped !");
+      console.log("cellule" + this.posX + this.posY);
+      if (moveCount <= 4) {
+        this.stopped = false;
+      }
+      if (this.stopped === true) {
+        document.removeEventListener("keydown", (e) => {
+          this.gestionEvenementsClavier(casesPossibles, e);
+        });
+      }
     }
 
     this.afficheInfos();
