@@ -10,6 +10,7 @@
  * @param {number} posX - la position en x de la case sur laquelle est le joueur
  * @param {number} posY- la position en y de la case sur laquelle est le joueur
  * @param {object} tmp - contient l'arme détenue par le joueur avant d'en changer
+ * @param {object} celluleFinTour - position temporaire du joueur pendant ses déplacements
  * @param {boolean} actif - "true" si c'est au tour du joueur en question
  * @param {boolean} stopped - "true" si le joueur arrive au bout du tableau ou de son compte de mouvements autorisés
  * @param {boolean} moving - "true" si le joueur est en train de bouger ou peut continuer à le faire
@@ -82,7 +83,8 @@ class Joueur {
   }
 
   /**
-   * trouve les cases sur lesquelles le joueur peut se déplacer
+   * trouve les cases sur lesquelles le joueur peut se déplacer (inclut la case de départ
+   * pour permettre les retours en arrière)
    * @param{string} axe - l'axe horizontal ou vertical
    * @param{object} joueur - le joueur qui doit trouver sa prochaine case
    * @param{number} direction - possibilité d'aller en arrière ou en avant
@@ -90,9 +92,12 @@ class Joueur {
   caseSuivante(axe, direction = 1) {
     let xPlayer = this.posX;
     let yPlayer = this.posY;
-
     let tabIndex = direction === 1 ? [1, 2, 3] : [-1, -2, -3];
     let tabCaseOk = [];
+    let caseDepart = carteUne.cellules.find((cellule) => {
+      return cellule.x === xPlayer && cellule.y === yPlayer;
+    });
+    tabCaseOk.push(caseDepart);
 
     for (let i of tabIndex) {
       let x = axe === "x" ? xPlayer - i : xPlayer;
@@ -101,7 +106,7 @@ class Joueur {
       if (x < carteUne.colonnes && x >= 0 && y < carteUne.lignes && y >= 0) {
         let caseOk = carteUne.cellules.find((cellule) => {
           return (
-            cellule.x == x && cellule.y == y && cellule.accessible === true
+            cellule.x === x && cellule.y === y && cellule.accessible === true
           );
         });
 
@@ -112,13 +117,11 @@ class Joueur {
         }
       }
     }
-
     return tabCaseOk;
   }
 
   /**
    * déplace le joueur, prend arme/lâche arme si le cas se présente, détecte conditions combat
-   * @param{object} joueur - le joueur qui se déplace
    */
   mouvementJoueur() {
     this.actif = true;
@@ -152,7 +155,7 @@ class Joueur {
     }
   }
   /**
-   *
+   * L'écouteur des événements au clavier. Déplace le joueur en fonction d'eux.
    * @param {array} casesPossibles - cellules sur lesquelles le joueur peut se déplacer
    * @param {event} e - événement touche pressée
    */
