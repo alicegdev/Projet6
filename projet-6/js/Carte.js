@@ -130,31 +130,45 @@ class Carte {
    * place les instances de la classe Joueur sur la carte
    */
   genererCasesJoueurs() {
-    // fonction à refaire
-    let k = 0;
     let randomCellule;
+    let randomCellulePOne, randomCellulePTwo;
+    let placementCorrect = true;
+    randomCellulePOne = this.rechercheCasesDisponibles();
+    tabJoueurs[0].posX = randomCellulePOne.x;
+    tabJoueurs[0].posY = randomCellulePOne.y;
 
     do {
-      randomCellule = this.rechercheCasesDisponibles();
-      tabJoueurs[k].posX = randomCellule.x;
-      tabJoueurs[k].posY = randomCellule.y;
-
+      randomCellulePTwo = this.rechercheCasesDisponibles();
+      tabJoueurs[1].posX = randomCellulePTwo.x;
+      tabJoueurs[1].posY = randomCellulePTwo.y;
       if (
-        randomCellule.id ===
+        randomCellulePTwo.id ===
           `cellule${tabJoueurs[0].posX - 1}${tabJoueurs[0].posY}` ||
-        randomCellule.id ===
+        randomCellulePTwo.id ===
           `cellule${tabJoueurs[0].posX + 1}${tabJoueurs[0].posY}` ||
-        randomCellule.id ===
+        randomCellulePTwo.id ===
           `cellule${tabJoueurs[0].posX}${tabJoueurs[0].posY - 1}` ||
-        randomCellule.id ===
+        randomCellulePTwo.id ===
           `cellule${tabJoueurs[0].posX}${tabJoueurs[0].posY + 1}`
       ) {
-        randomCellule = this.rechercheCasesDisponibles();
+        placementCorrect = false;
+        console.log("condition false remplie");
+      } else {
+        placementCorrect = true;
       }
-      let $randomCell = document.getElementById(randomCellule.id);
-      $randomCell.style.backgroundImage = "url(" + tabJoueurs[k].visuel + ")";
-      randomCellule.disponible = false;
-      k++;
-    } while (k < tabJoueurs.length);
+    } while (placementCorrect === false);
+
+    tabJoueurs.forEach((joueur) => {
+      let $randomCell = document.getElementById(
+        "cellule" + joueur.posX + joueur.posY
+      );
+      $randomCell.style.backgroundImage = "url(" + joueur.visuel + ")";
+      do {
+        randomCellule = this.cellules.find((cellule) => {
+          return cellule.x === joueur.posX && cellule.y === joueur.posY;
+        });
+        randomCellule.disponible = false;
+      } while (randomCellule === undefined);
+    });
   }
 }
