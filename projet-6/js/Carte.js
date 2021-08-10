@@ -88,7 +88,7 @@ class Carte {
     }
   }
   /**
-   * recherche les cases qui ne sont pas déjà prises par des armes, des joueurs, des obstacles
+   * retourne une case aléatoire qui n'est pas déjà prise par une arme, un joueur, un obstacle
    */
   rechercheCasesDisponibles() {
     let celluleRandom;
@@ -130,6 +130,7 @@ class Carte {
    * place les instances de la classe Joueur sur la carte
    */
   genererCasesJoueurs() {
+    // fonction à refaire
     let k = 0;
     let randomCellule;
 
