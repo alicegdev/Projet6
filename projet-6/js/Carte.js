@@ -152,7 +152,6 @@ class Carte {
           `cellule${tabJoueurs[0].posX}${tabJoueurs[0].posY + 1}`
       ) {
         placementCorrect = false;
-        console.log("condition false remplie");
       } else {
         placementCorrect = true;
       }
