@@ -86,7 +86,6 @@ class Joueur {
    * trouve les cases sur lesquelles le joueur peut se déplacer (inclut la case de départ
    * pour permettre les retours en arrière)
    * @param{string} axe - l'axe horizontal ou vertical
-   * @param{object} joueur - le joueur qui doit trouver sa prochaine case
    * @param{number} direction - possibilité d'aller en arrière ou en avant
    */
   caseSuivante(axe, direction = 1) {

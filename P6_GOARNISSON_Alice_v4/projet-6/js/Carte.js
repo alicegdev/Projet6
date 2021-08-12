@@ -136,11 +136,13 @@ class Carte {
     randomCellulePOne = this.rechercheCasesDisponibles();
     tabJoueurs[0].posX = randomCellulePOne.x;
     tabJoueurs[0].posY = randomCellulePOne.y;
+    randomCellulePOne.disponible = false;
 
     do {
       randomCellulePTwo = this.rechercheCasesDisponibles();
       tabJoueurs[1].posX = randomCellulePTwo.x;
       tabJoueurs[1].posY = randomCellulePTwo.y;
+      randomCellulePTwo.disponible = false;
       if (
         randomCellulePTwo.id ===
           `cellule${tabJoueurs[0].posX - 1}${tabJoueurs[0].posY}` ||
@@ -158,6 +160,7 @@ class Carte {
     } while (placementCorrect === false);
 
     tabJoueurs.forEach((joueur) => {
+      console.log(joueur.posX, joueur.posY);
       let $randomCell = document.getElementById(
         "cellule" + joueur.posX + joueur.posY
       );
